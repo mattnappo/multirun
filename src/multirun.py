@@ -1,6 +1,12 @@
 from functools import wraps
 from log import task_logger as log
 
+def _format_args(args: dict):
+    if args:
+        return ', '.join([f"{k} = {repr(v)}" for k, v in args.items()])
+    else:
+        return "(no args)"
+
 class Runner:
     def __init__(self, parallel: bool = False):
         self._tasks = []
@@ -21,7 +27,7 @@ class Runner:
     def run(self):
         for func, args in self._tasks:
             name = func.__name__
-            log.info(f"[RUN {name}]: args = {args}")
+            log.info(f"[{name}] {_format_args(args)}")
             if args:
                 func(**args)
             else:

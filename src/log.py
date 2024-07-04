@@ -1,7 +1,6 @@
 import logging
 
 class CustomFormatter(logging.Formatter):
-
     grey = "\x1b[38;20m"
     blue = "\x1b[34;20m"
     yellow = "\x1b[33;20m"
@@ -23,19 +22,9 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-# create logger with 'spam_application'
-task_logger = logging.getLogger("TASK RUN")
+task_logger = logging.getLogger("multirun")
 task_logger.setLevel(logging.DEBUG)
-
-# create console handler with a higher log level
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
-
 ch.setFormatter(CustomFormatter())
 task_logger.addHandler(ch)
-
-#  task_logger.debug("debug message")
-#  task_logger.info("info message")
-#  task_logger.warning("warning message")
-#  task_logger.error("error message")
-#  task_logger.critical("critical message")

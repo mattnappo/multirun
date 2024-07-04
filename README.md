@@ -1,3 +1,3 @@
 # multirun
 
-Simple zero-dependence Python tool to sweep function arguments.
+Simple zero-dependence Python tool to parameterize multiple runs of a function.

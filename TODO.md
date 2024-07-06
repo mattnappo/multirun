@@ -5,3 +5,4 @@ So instead of `@task(args = [{'a' = 1}, {'a' = 2}])`. You can say
 - [ ] Parallel runs
 - [ ] Parse runs from yaml file
 - [ ] Runs on Modal
+- [ ] Multipe iterations

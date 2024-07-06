@@ -1,3 +1,5 @@
+import yaml
+
 from functools import wraps
 from log import task_logger as log
 
@@ -10,6 +12,12 @@ def _format_args(args: dict):
 class Runner:
     def __init__(self, parallel: bool = False):
         self._tasks = []
+
+    def from_yaml(file: str):
+        with open(file) as stream:
+            config = yaml.safe_load(stream)['tasks']
+            from pprint import pprint
+            pprint(config)
 
     def task(self, runs=None):
         def decorator(func):

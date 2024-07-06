@@ -19,4 +19,6 @@ def run_cmd(cmd):
     print(output)
     return (out.returncode, output)
 
-runner.run()
+def test_run():
+    print()
+    runner.run()

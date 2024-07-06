@@ -1,16 +1,11 @@
 tasks:
   - echo:
       args:
+        x: 'world'
+  - echo:
+      args:
         x: 'matt'
-  - echo:
-      args:
-        x: 'alex'
-  - echo:
-      args:
-        x: 'chris'
   - add:
       args:
         a: 4
         b: 5
-        
-

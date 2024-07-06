@@ -1,6 +1,6 @@
 from multirun import Runner
 
-runner = Runner.from_yaml("config.yaml")
+runner = Runner.from_yaml("tests/config.yaml")
 
 @runner.task()
 def echo(x: str):
@@ -10,4 +10,6 @@ def echo(x: str):
 def add(a: int, b: int):
     print(a + b)
 
-runner.run()
+def test_run():
+    print()
+    runner.run()

@@ -1,7 +1,6 @@
-import yaml
-
 from functools import wraps
 from log import task_logger as log
+import yaml
 
 def _format_args(args: dict):
     if args:
@@ -10,26 +9,46 @@ def _format_args(args: dict):
         return "(no args)"
 
 class Runner:
-    def __init__(self, parallel: bool = False):
+    def __init__(self, parallel: bool = False, from_config: bool = False):
         self._tasks = []
+        self._from_config = from_config
 
     def from_yaml(file: str):
         with open(file) as stream:
             config = yaml.safe_load(stream)['tasks']
-            from pprint import pprint
-            pprint(config)
+
+        runner = Runner(from_config=True)
+        runner._config = config
+        return runner
 
     def task(self, runs=None):
-        def decorator(func):
-            @wraps(func)
-            def inner(*args, **kwargs): # remove arg
-                return func(*args, **kwargs)
-            if isinstance(runs, list):
-                for argset in runs:
+        if self._from_config:
+            def decorator(func):
+                @wraps(func)
+                def inner(*args, **kwargs):
+                    return func(*args, **kwargs)
+                
+                if runs:
+                    log.warn("Runs supplied in decorator will be ignored.")
+
+                name = func.__name__
+                cfg_runs = [   task[name]['args'] for task in self._config if name in task.keys()    ]
+                for argset in cfg_runs:
                     self._tasks.append((inner, argset))
-            else:
-                self._tasks.append((inner, runs))
-            return inner
+                return inner
+
+        else:
+            def decorator(func):
+                @wraps(func)
+                def inner(*args, **kwargs): # remove arg
+                    return func(*args, **kwargs)
+                if isinstance(runs, list):
+                    for argset in runs:
+                        self._tasks.append((inner, argset))
+                else:
+                    self._tasks.append((inner, runs))
+                return inner
+
         return decorator
 
     def run(self):

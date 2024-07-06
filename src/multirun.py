@@ -21,7 +21,7 @@ class Runner:
         runner._config = config
         return runner
 
-    def task(self, runs=None):
+    def task(self, args=None, runs=None):
         if self._from_config:
             def decorator(func):
                 @wraps(func)
@@ -32,7 +32,7 @@ class Runner:
                     log.warn("Runs supplied in decorator will be ignored.")
 
                 name = func.__name__
-                cfg_runs = [   task[name]['args'] for task in self._config if name in task.keys()    ]
+                cfg_runs = [task[name]['args'] for task in self._config if name in task.keys()]
                 for argset in cfg_runs:
                     self._tasks.append((inner, argset))
                 return inner
@@ -40,9 +40,11 @@ class Runner:
         else:
             def decorator(func):
                 @wraps(func)
-                def inner(*args, **kwargs): # remove arg
+                def inner(*args, **kwargs):
                     return func(*args, **kwargs)
-                if isinstance(runs, list):
+                if args:
+                    self._tasks.append((inner, args))
+                elif isinstance(runs, list):
                     for argset in runs:
                         self._tasks.append((inner, argset))
                 else:

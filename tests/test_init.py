@@ -8,6 +8,10 @@ runner = Runner()
 def simple_task():
     print("hello world")
 
+@runner.task(args={'x': 1, 'y': 2})
+def arg_task(x, y):
+    print(f"added {x + y}")
+
 @runner.task(runs=[{'x': 1, 'y': 2}, {'x': 5, 'y': 17}])
 def echo_task(x, y):
     print(f"hello {x + y}")

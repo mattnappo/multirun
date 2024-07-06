@@ -4,9 +4,7 @@ Simple zero-dependence Python tool to configure multiple runs of a set of functi
 
 ## Example
 
-### Specifying Arguments Sets
-
-#### Setup
+### Setup
 
 In a Python file, create a `Runner` which manages task configuration and state.
 
@@ -15,7 +13,7 @@ from multirun import Runner
 runner = Runner()
 ```
 
-#### Add a static task
+### Add a static task
 
 This will add the `hello` function to the `Runner`.
 
@@ -38,7 +36,7 @@ This will output
 Hello multirun
 ```
 
-#### Single-run task
+### Single-run task
 
 Now, let's make a function that requires two arguments.
 
@@ -57,7 +55,7 @@ This will output:
 11
 ```
 
-#### Multi-run task
+### Multi-run task
 
 You can also specify a list of argument `dict`s with `runs=`. This will will run
 the function once per each argument set.
@@ -79,7 +77,7 @@ This will output:
 3
 ```
 
-### Parsing from YAML
+## Parsing from YAML
 
 You can also specify your task runs in a yaml file. Here is an example:
 
